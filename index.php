@@ -1,12 +1,6 @@
 <?php
-    $host = "localhost";
-    $user = "user";
-    $password = "123";
-    $database = "hidemyplugins";
-    $sqltable = "hmp";
-
-    $obj_conexion = 
-    mysqli_connect($host,$user,$password,$database);
+    include 'config/database.php';
+    include 'config/connection.php';
 
     if(isset($_post['sub'])) {
       function Redirect($new_link, $statusCode = 303) {
@@ -16,11 +10,13 @@
       }
     }
 
-    $getUser = isset($_GET['user']) ? $_GET['user'] : '';
-    if ($getUser == "") {
-      $query_result = $obj_conexion->query("SELECT * FROM `" .$sqltable.  "` ORDER BY `DATE` ASC");
+    $unsafe_getUser = isset($_GET['user']) ? $_GET['user'] : '';
+    $safe_variable = mysqli_real_escape_string($mysql_connection, $unsafe_getUser);
+
+    if ($unsafe_getUser == "") {
+      $query_result = $mysql_connection->query("SELECT * FROM `" .$mysql_sqltable.  "` ORDER BY `DATE` ASC");
     } else {
-      $query_result = $obj_conexion->query("SELECT * FROM `" .$sqltable.  "` WHERE `USER` LIKE '" .$getUser. "' ORDER BY `DATE` ASC");
+      $query_result = $mysql_connection->query("SELECT * FROM `" .$mysql_sqltable.  "` WHERE `USER` LIKE '" .$safe_variable. "' ORDER BY `DATE` ASC");
     }
 
 ?>
@@ -40,7 +36,7 @@
     <title>HideMyPlugins Web Interface</title>
   </head>
   <body>
-    <nav class="navbar navbar-expand-lg navbar-dark bg-primary">
+    <nav class="navbar navbar-expand-lg fixed-top navbar-dark bg-primary">
         <a class="navbar-brand" href="#">HideMyPlugins Web</a>
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
           <span class="navbar-toggler-icon"></span>
@@ -58,7 +54,13 @@
 
       <div class="container">
           <p class="spacer-1">.</p>
-
+          <div class="alert alert-warning alert-dismissible fade <?php if($searching == true) { echo "show"; }?>" role="alert">
+            <strong>Holy guacamole!</strong> You should check in on some of those fields below.
+            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+           </div>
         </div>
 
       <div class="container">
@@ -67,6 +69,7 @@
               <tr>
                 <th scope="col">ID</th>
                 <th scope="col">User</th>
+                <th scope="col">Skin</th>
                 <th scope="col">UUID</th>
                 <th scope="col">Executed Command</th>
                 <th scope="col">Date</th>
@@ -79,6 +82,7 @@
                     echo "<tr>
                     <td>".$var_table["ID"]."</td>";
                     echo "<td>".$var_table["USER"]."</td>";
+                    echo '<td><img src="https://minotar.net/helm/'.$var_table["USER"].'/50.png"style="width:50px;height:50px;"></td>';
                     echo "<td>".$var_table["UUID"]."</td>";
                     echo "<td>".$var_table["EXECUTED_COMMAND"]."</td>";
                     echo "<td>".$var_table["DATE"]."</td></tr>";
