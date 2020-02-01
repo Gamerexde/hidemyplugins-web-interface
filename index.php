@@ -1,5 +1,6 @@
 <?php
 include 'config/settings.php';
+error_reporting(0);
 
 if (isset($_GET['pageno'])) {
   $pageno = $_GET['pageno'];
@@ -9,11 +10,10 @@ if (isset($_GET['pageno'])) {
 $no_of_records_per_page = 10;
 $offset = ($pageno-1) * $no_of_records_per_page;
 
-$conn=mysqli_connect($mysql_host,$mysql_user,$mysql_password,$mysql_database);
-if ($conn->connect_error) {
-  die("Connection failed: " . $conn->connect_error);
+$conn = mysqli_connect($mysql_host,$mysql_user,$mysql_password,$mysql_database);
+
+if (mysqli_connect_errno()){
 } else {
-  error_reporting(0);
 }
 
 
@@ -33,7 +33,6 @@ if ($unsafe_getUser == "") {
 
   $sql = "SELECT * FROM `" .$mysql_sqltable.  "` ORDER BY `DATE` DESC LIMIT $offset,$no_of_records_per_page";
   $res_data = mysqli_query($conn,$sql);
-  // $query_result = $mysql_connection->query("SELECT * FROM `" .$mysql_sqltable.  "` ORDER BY `DATE` ASC");
 } else {
   $total_pages_sql = "SELECT * FROM `" .$mysql_sqltable.  "` WHERE `USER` LIKE '" .$safe_variable. "'ORDER BY `DATE` DESC";
   $result = mysqli_query($conn,$total_pages_sql);
@@ -42,7 +41,6 @@ if ($unsafe_getUser == "") {
 
   $sql = "SELECT * FROM `" .$mysql_sqltable.  "` WHERE `USER` LIKE '" .$safe_variable. "' ORDER BY `DATE` DESC LIMIT $offset,$no_of_records_per_page";
   $res_data = mysqli_query($conn,$sql);
-  // $query_result = $mysql_connection->query("SELECT * FROM `" .$mysql_sqltable.  "` WHERE `USER` LIKE '" .$safe_variable. "' ORDER BY `DATE` ASC");
 }
 
 ?>
@@ -62,36 +60,39 @@ if ($unsafe_getUser == "") {
     <title><?php echo $web_name?></title>
   </head>
   <body>
-    <nav class="navbar navbar-expand-lg fixed-top navbar-dark bg-primary">
-        <a class="navbar-brand" href="<?php echo $web_url?>"><?php echo $web_name?></a>
-        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
-          <span class="navbar-toggler-icon"></span>
-        </button>
-        <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
-          <div class="navbar-nav">
-            <a class="nav-item nav-link active" href="index.php">Home<span class="sr-only">(current)</span></a>
-          </div>
-        </div>
-        <form class="form-inline">
-          <input class="form-control mr-sm-2" type="search" placeholder="Search" name="user" aria-label="Search">
-          <button class="btn btn-outline-light my-2 my-sm-0" type="submit" name="sub">Search</button>
-        </form>
-    </nav>
+      <?php require_once './inc/navbar.php'; print_navbar();?>
 
       <div class="container">
           <p class="spacer-1">.</p>
       </div>
 
-      <ul class="pagination">
-          <li><a href="?pageno=1">First</a></li>
-          <li class="<?php if($pageno <= 1){ echo 'disabled'; } ?>">
-              <a href="<?php if($pageno <= 1){ echo '#'; } else { echo "?user=" .$unsafe_getUser. "&pageno=".($pageno - 1); } ?>">Prev</a>
-          </li>
-          <li class="<?php if($pageno >= $total_pages){ echo 'disabled'; } ?>">
-              <a href="<?php if($pageno <= $total_pages){ echo '#'; } else { echo "?user=" .$unsafe_getUser. "&pageno=".($pageno + 1); } ?>">Next</a>
-          </li>
-          <li><a href="?pageno=<?php echo $total_pages; ?>">Last</a></li>
-      </ul>
+      <?php
+      if (mysqli_connect_errno()) {
+        $error = mysqli_connect_error();
+      ?>
+      <div class="container">
+        <p class="spacer-1">.</p>
+        <div class="alert alert-danger alert-dismissible fade <?php if (mysqli_connect_errno()){ echo "show"; }?>" role="alert">
+          <strong>Damn son!</strong> We cannot connect to the MySQL Server: <strong><?php echo $error;?></strong>
+          <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+      </div>
+      <?php
+      }
+      ?>
+
+      <?php
+      if ($conn) {
+      ?>
+      <div class="container">
+          <p class="spacer-1">.</p>
+          <a class="btn btn-info" href="<?php echo "?user=" .$unsafe_getUser. "&pageno=1";?>" role="button">First</a>
+          <a class="btn btn-info" href="<?php if($pageno <= 1){ echo '#'; } else { echo "?user=" .$unsafe_getUser. "&pageno=".($pageno - 1); } ?>">Prev</a>
+          <a class="btn btn-info" role="button" href="<?php echo "?user=" .$unsafe_getUser. "&pageno=".($pageno + 1);?>">Next</a>
+          <h6><strong>Page: <?php echo $pageno?></strong></h6>
+      </div>
 
       <div class="container">
         <table class="table">
@@ -123,12 +124,18 @@ if ($unsafe_getUser == "") {
             </tbody>
           </table>
       </div>
+      <?php
+    } else {
+      ?>
+      <div class="container">
+        <h2 class="text-center">You maybe set up your database the wrong way...</h2>
+        <p class="text-center">Go to my <a href="https://github.com">github guide</a> to learn how to set up your database correctly.</p>
+      </div>
+      <?php
+    }
+      ?>
 
-      <footer class="fixed-bottom footer">
-            <div class="container">
-              <span class="text-muted"><?php echo $web_footer?></span>
-            </div>
-      </footer>
+      <?php require_once './inc/footer.php'; print_footer();?>
 
     <script src="inc/js/jquery-3.2.1.slim.min.js"></script>
     <script src="inc/js/popper.js"></script>

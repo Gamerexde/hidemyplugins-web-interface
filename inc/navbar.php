@@ -1,5 +1,6 @@
 <?php
-include 'config/settings.php'
+function print_navbar() {
+  include './config/settings.php';
 ?>
 <nav class="navbar navbar-expand-lg fixed-top navbar-dark bg-primary">
     <a class="navbar-brand" href="<?php echo $web_url?>"><?php echo $web_name?></a>
@@ -16,3 +17,6 @@ include 'config/settings.php'
       <button class="btn btn-outline-light my-2 my-sm-0" type="submit" name="sub">Search</button>
     </form>
 </nav>
+<?php
+}
+?>
