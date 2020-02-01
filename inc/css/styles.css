@@ -1,9 +1,15 @@
 .spacer-1 {
-    margin-bottom: 1rem;
+    margin-bottom: 2rem;
     opacity: 0;
 }
 
 .spacer-2 {
     margin-bottom: 0.2rem;
     opacity: 0;
+}
+
+.footer {
+  background-color: #fafafa;
+  color: white;
+  text-align: center;
 }
