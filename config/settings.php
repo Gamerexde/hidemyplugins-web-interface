@@ -38,6 +38,9 @@ $mysql_sqltable = "hmp";
 // Here you will set up the basics of the webpage.
 
 // Whats name you will set up for your web interface?
+$version_advice = true;
+
+// Whats name you will set up for your web interface?
 $web_name = "HideMyPlugins Web";
 // In what webpage you will set up this web interface?
 $web_url = "https://gamerexde.com/litebans";

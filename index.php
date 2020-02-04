@@ -86,6 +86,7 @@ if ($unsafe_getUser == "") {
       <?php
       if ($conn) {
       ?>
+      <?php require_once './inc/notice.php'; print_notice();?>
       <div class="container">
           <p class="spacer-1">.</p>
           <a class="btn btn-info" href="<?php echo "?user=" .$unsafe_getUser. "&pageno=1";?>" role="button">First</a>
