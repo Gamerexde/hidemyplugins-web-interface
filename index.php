@@ -12,11 +12,6 @@ $offset = ($pageno-1) * $no_of_records_per_page;
 
 $conn = mysqli_connect($mysql_host,$mysql_user,$mysql_password,$mysql_database);
 
-if (mysqli_connect_errno()){
-} else {
-}
-
-
 if(isset($_post['sub'])) {
   $new_link = $_post['user'];
 
