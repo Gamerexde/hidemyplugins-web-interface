@@ -130,7 +130,7 @@ if ($unsafe_getUser == "") {
       ?>
       <div class="container">
         <h2 class="text-center">You maybe set up your database the wrong way...</h2>
-        <p class="text-center">Go to my <a href="https://github.com">github guide</a> to learn how to set up your database correctly.</p>
+        <p class="text-center">Go to my <a href="https://github.com/Gamerexde/hidemyplugins-web-interface/wiki/Setup">github guide</a> to learn how to set up your database correctly.</p>
       </div>
       <?php
     }
