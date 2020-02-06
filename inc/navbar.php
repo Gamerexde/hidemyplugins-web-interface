@@ -12,10 +12,6 @@ function print_navbar() {
         <a class="nav-item nav-link active" href="index.php">Home<span class="sr-only">(current)</span></a>
       </div>
     </div>
-    <form class="form-inline">
-      <input class="form-control mr-sm-2" type="search" placeholder="Search" name="user" aria-label="Search">
-      <button class="btn btn-outline-light my-2 my-sm-0" type="submit" name="sub">Search</button>
-    </form>
 </nav>
 <?php
 }
