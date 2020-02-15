@@ -1,4 +1,4 @@
-![](https://i.imgur.com/EUTlrdA.png "Banner")
+![](https://i.imgur.com/vACj4jc.png "Banner")
 
 A PHP based Web Interface for HideMyPlugins
 
