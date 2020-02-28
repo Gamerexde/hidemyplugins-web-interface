@@ -1,28 +1,54 @@
+/*Custom CSS for HideMyPlugins Web Interface*/
 .spacer-1 {
-    margin-bottom: 2rem;
-    opacity: 0;
+  margin-bottom: 2rem;
+  opacity: 0;
+}
+
+.nav {
+  margin-bottom: 1rem;
+}
+
+.nav-custom .nav-tabs{
+    margin-bottom:5%;
+}
+.nav-custom .nav-tabs .nav-link{
+    font-weight:600;
+    border: none;
+}
+.nav-custom .nav-tabs .nav-link.active{
+    border: none;
+    border-bottom:2px solid rgba(41,182,246,1);
+}
+
+.nav-custom a {
+  color: rgba(156,204,101,1);
 }
 
 .spacer-2 {
-    margin-bottom: 1rem;
-    opacity: 0;
+  margin-bottom: 1rem;
+  opacity: 0;
 }
 
 .footer {
-  background-color: #fafafa;
-  color: white;
-  text-align: center;
+background-color: #fafafa;
+color: white;
+text-align: center;
 }
 
 .container-center {
-  margin-top: auto;
-  margin-bottom: auto;
+margin-top: auto;
+margin-bottom: auto;
 }
 
 .box {
-  box-shadow: 5px 10px;
+box-shadow: 5px 10px;
 }
 
 .white {
-  color: #fff
+color: #fff
+}
+
+.bg-custom {
+  background: rgb(41,182,246);
+  background: linear-gradient(90deg, rgba(41,182,246,1) 0%, rgba(156,204,101,1) 100%);
 }

@@ -5,15 +5,15 @@ function error(){
   
 
   if (mysqli_connect_errno()) {
-    $error = mysqli_connect_error();
+$error = mysqli_connect_error();
 ?>
 <div class="container">
   <p class="spacer-1">.</p>
   <div class="alert alert-danger alert-dismissible fade <?php if (mysqli_connect_errno()){ echo "show"; }?>" role="alert">
-    <strong>Damn son!</strong> We cannot connect to the MySQL Server: <strong><?php echo $error;?></strong>
-    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-      <span aria-hidden="true">&times;</span>
-    </button>
+<strong>Damn son!</strong> We cannot connect to the MySQL Server: <strong><?php echo $error;?></strong>
+<button type="button" class="close" data-dismiss="alert" aria-label="Close">
+  <span aria-hidden="true">&times;</span>
+</button>
   </div>
 </div>
 <?php
